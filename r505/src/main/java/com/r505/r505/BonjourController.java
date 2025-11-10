@@ -1,4 +1,4 @@
-package com.r505.r505; // adapte selon ton package
+package com.r505.r505;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
