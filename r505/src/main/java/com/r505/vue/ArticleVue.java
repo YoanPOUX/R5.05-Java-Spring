@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.r505.controller.ArticleService;
 import com.r505.modele.Article;
+import com.r505.modele.User;
+import java.util.List;
 
 
 @Controller
@@ -54,6 +56,34 @@ public class ArticleVue {
     public @ResponseBody String deleteArticle(@PathVariable Integer id) {
         articleService.deleteArticle(id);
         return "Deleted";
+    }
+
+    @PostMapping(path="/{id}/like/{userId}")
+    public @ResponseBody String likeArticle(@PathVariable Integer id, @PathVariable Integer userId) {
+        boolean ok = articleService.likeArticle(id, userId);
+        return ok ? "Liked" : "Error";
+    }
+
+    @PostMapping(path="/{id}/dislike/{userId}")
+    public @ResponseBody String dislikeArticle(@PathVariable Integer id, @PathVariable Integer userId) {
+        boolean ok = articleService.dislikeArticle(id, userId);
+        return ok ? "Disliked" : "Error";
+    }
+
+    @DeleteMapping(path="/{id}/reaction/{userId}")
+    public @ResponseBody String removeReaction(@PathVariable Integer id, @PathVariable Integer userId) {
+        boolean ok = articleService.removeReaction(id, userId);
+        return ok ? "Removed" : "NotFound";
+    }
+
+    @GetMapping(path="/{id}/likes")
+    public @ResponseBody List<User> getLikers(@PathVariable Integer id) {
+        return articleService.getLikers(id);
+    }
+
+    @GetMapping(path="/{id}/dislikes")
+    public @ResponseBody List<User> getDislikers(@PathVariable Integer id) {
+        return articleService.getDislikers(id);
     }
 
 }
